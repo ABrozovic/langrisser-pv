@@ -26,6 +26,7 @@
     "ecmaVersion": 11,
     "sourceType": "module"
   },
+  "ignorePatterns": ["node_modules/*","/local_modules/*", "lib/*", ".next/*", ".out/*", "!.prettierrc.js"],  
   "plugins": ["react", "react-hooks", "@typescript-eslint", "tailwindcss"],
   "rules": {
     "react-hooks/rules-of-hooks": "error",
