@@ -7,6 +7,9 @@ import path from 'path'
 // https://vitejs.dev/config https://vitest.dev/config
 export default defineConfig({
   plugins: [react(), tsconfigPaths()],
+  build: {
+    minify: false,
+  },
   resolve: {
     alias: {
       '@': path.resolve(__dirname, './src'),
