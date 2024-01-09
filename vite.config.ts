@@ -9,6 +9,7 @@ export default defineConfig({
   plugins: [react(), tsconfigPaths()],
   build: {
     minify: false,
+    sourcemap: true,
   },
   resolve: {
     alias: {
