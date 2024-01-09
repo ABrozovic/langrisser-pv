@@ -421,6 +421,9 @@ export class SkeletonBinary {
       }
       case AttachmentType.Mesh: {
         let path = input.readStringRef()
+        // if(name === "body_down" || path ==="body_down"){
+        //   console.log("here")
+        // }
         const color = input.readInt32()
         const vertexCount = input.readInt(true)
         const uvs = this.readFloatArray(input, vertexCount << 1, 1)
@@ -456,7 +459,6 @@ export class SkeletonBinary {
           mesh.width = width * scale
           mesh.height = height * scale
         }
-
         return mesh
       }
       case AttachmentType.LinkedMesh: {

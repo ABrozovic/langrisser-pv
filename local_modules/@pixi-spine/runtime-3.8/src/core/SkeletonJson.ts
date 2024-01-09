@@ -508,7 +508,7 @@ export class SkeletonJson {
 
   readVertices(map: any, attachment: VertexAttachment, verticesLength: number) {
     let scale = this.scale
-    attachment.worldVerticesLength = verticesLength
+    attachment.worldVerticesLength = verticesLength 
     let vertices: Array<number> = map.vertices
     if (verticesLength == vertices.length) {
       let scaledVertices = Utils.toFloatArray(vertices)
