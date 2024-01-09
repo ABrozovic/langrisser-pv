@@ -30,6 +30,7 @@ export function Langrisser() {
   const spine = useSpineStore((state) => state.spineAnimation)
 
   const activeCharacter = useSpineStore((state) => state.activeCharacter)
+  const activeSkin = useSpineStore((state) => state.activeSkin)
 
   const error = useSpineStore((state) => state.error)
 
@@ -40,7 +41,8 @@ export function Langrisser() {
   React.useEffect(() => {
     if (!spine) return
     pixiSpine.init(spine)
-  }, [spine, pixiSpine.init, pixiSpine])
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [spine])
 
   return (
     <div className="container relative flex min-h-screen w-full flex-col items-center gap-6 py-6">
@@ -85,6 +87,11 @@ export function Langrisser() {
           <div className="w-full">
             <Label>Animation list:</Label>
             <ComboBox
+              key={activeSkin}
+              defaultValue={{
+                value: '0',
+                label: 'idle_Normal',
+              }}
               disabled={(pixiSpine.animationList ?? []).length <= 0}
               disabledText="Load a skin first"
               searchText="Search by skin name"
@@ -92,7 +99,7 @@ export function Langrisser() {
               notFoundText="No skins found"
               data={pixiSpine.animationList?.map((animation, i) => ({
                 value: i.toString(),
-                label: animation.name,
+                label: animation,
               }))}
               onChange={(value) => pixiSpine.playAnimation(parseInt(value))}
             />

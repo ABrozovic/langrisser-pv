@@ -286,7 +286,7 @@ export class SkelToJson {
         shearX: bone.shearX,
         shearY: bone.scaleY,
         transform: this.getTransform(bone.inheritRotation, bone.inheritScale),
-        //color: bone.
+        //color: bone.s
       }
     })
   }
@@ -476,7 +476,8 @@ export class SkelToJson {
             timelineConstructorName.includes(item),
           )
         ) {
-          this.handleDeformTimeline(timeline as DeformTimeline)
+          //TODO: fix deformtimelines
+          //this.handleDeformTimeline(timeline as DeformTimeline)
         }
         // TODO: Handle EventTimeline and DrawOrderTimeline
       })
@@ -522,7 +523,7 @@ export class SkelToJson {
               {
                 type: 'boundingbox',
                 vertexCount: attachment.worldVerticesLengtt! >> 1,
-                vertices: attachment.cVertices,
+                vertices: attachment.cVertices ?? attachment.vertices,
                 color: this.rgba8888ToColor(attachment.color!),
                 name: attachment.name,
               },
@@ -530,13 +531,16 @@ export class SkelToJson {
             break
           }
           case AttachmentType.Mesh: {
+            if (attachment.name === 'body_down') {
+              // console.log('stop')
+            }
             skinData.addMeshAttachment(
               this.spine.skeleton.data.slots[skinEntry.slotIndex]?.name,
               skinEntry.name,
               {
                 type: 'mesh',
                 name: attachment.name,
-                vertices: attachment.cVertices,
+                vertices: attachment.cVertices ?? attachment.vertices,
                 uvs: attachment.uvs ?? Object.values(attachment.regionUVs!),
                 hull: attachment.hullLength! >> 1,
                 edges: attachment.edges,
@@ -556,7 +560,7 @@ export class SkelToJson {
               {
                 type: 'clipping',
                 vertexCount: attachment.worldVerticesLengtt! >> 1,
-                vertices: attachment.cVertices,
+                vertices: attachment.cVertices ?? attachment.vertices,
                 name: attachment.name,
                 end: attachment.endSlot.name,
               },
@@ -588,7 +592,7 @@ export class SkelToJson {
               {
                 type: 'path',
                 vertexCount: attachment.worldVerticesLengtt! >> 1,
-                vertices: attachment.cVertices,
+                vertices: attachment.cVertices ?? attachment.vertices,
                 closed: attachment.closed,
                 color: this.rgba8888ToColor(attachment.color!),
                 constantSpeed: attachment.constantSpeed,

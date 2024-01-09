@@ -22,6 +22,7 @@ export type DB = {
 type SpineState = {
   db: DB | undefined
   activeCharacter: string
+  activeSkin: string
   characterList: string[]
   skinList: string[]
   spineAnimation: Spine | undefined
@@ -37,6 +38,7 @@ export const useSpineStore: UseBoundStore<StoreApi<SpineState>> =
   create<SpineState>((set, get) => ({
     db: undefined,
     activeCharacter: '',
+    activeSkin: '',
     characterList: [],
     skinList: [],
     spineAnimation: undefined,
@@ -71,6 +73,7 @@ export const useSpineStore: UseBoundStore<StoreApi<SpineState>> =
           error: '',
           skinList: availableSkins,
           activeCharacter: selectedCharacter,
+          activeSkin: availableSkins[0],
         })
       } catch (error) {
         console.log(error)
@@ -101,7 +104,7 @@ export const useSpineStore: UseBoundStore<StoreApi<SpineState>> =
           fileUrls.skelUrl,
         )
 
-        set({ spineAnimation: spine, error: '' })
+        set({ spineAnimation: spine, error: '', activeSkin: selectedSkin })
       } catch (error) {
         console.log(error)
         set({ error: 'Failed to load skin.' })

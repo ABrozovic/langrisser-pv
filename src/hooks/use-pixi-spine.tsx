@@ -1,17 +1,12 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import React, { useCallback, useLayoutEffect, useRef, useState } from 'react'
 import { useGesture } from '@use-gesture/react'
-import {
-  SpineDebugRenderer,
-  type IAnimation,
-  type ITimeline,
-  type Spine,
-} from 'pixi-spine'
+import { SpineDebugRenderer, type Spine } from 'pixi-spine'
 import * as PIXI from 'pixi.js'
 
 export type UseSpine = {
   init: (spine: Spine) => void
-  animationList: IAnimation<ITimeline>[] | undefined
+  animationList: string[] | undefined
   playAnimation: (index: number) => void
   setStartingPositionAndScale: () => void
   toggleDebugMode: () => void
@@ -22,9 +17,7 @@ export type UseSpine = {
 }
 const useSpine = (): UseSpine => {
   const canvasRef = useRef<HTMLCanvasElement | null>(null)
-  const [animationList, setAnimationList] = useState<
-    IAnimation<ITimeline>[] | undefined
-  >()
+  const [animationList, setAnimationList] = useState<string[] | undefined>()
   const appRef = useRef<PIXI.Application | null>(null)
   const spineAnimationRef = useRef<Spine | undefined | null>()
   const spineAnimationOriginalHeight = useRef(0)
@@ -141,11 +134,14 @@ const useSpine = (): UseSpine => {
       removeCurrentAnimation()
       spineAnimationOriginalHeight.current = spine.getBounds().height
       spineAnimationRef.current = spine
-
+      const animations = spineAnimationRef.current.spineData.animations
+        .map((anim) => anim.name)
+        .filter((anim) => !anim.includes('Dialog'))
       setStartingPositionAndScale()
-      setAnimationList(spineAnimationRef.current?.spineData.animations)
 
       setSpineInstance(spine)
+      setAnimationList(animations)
+      spineAnimationRef.current?.state.setAnimation(0, animations[0], true)
     },
     [setStartingPositionAndScale],
   )

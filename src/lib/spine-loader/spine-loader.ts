@@ -6,7 +6,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import * as spine34 from '@pixi-spine/runtime-3.4'
 import * as spine37 from '@pixi-spine/runtime-3.7'
-import * as spine38 from '@pixi-spine/runtime-3.8'
+import * as spine38 from '../../../local_modules/@pixi-spine/runtime-3.8/src'
 import * as spine41 from '@pixi-spine/runtime-4.1'
 import {
   BinaryInput,
